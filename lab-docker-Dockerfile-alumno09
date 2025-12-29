@@ -1,0 +1,25 @@
+# Laboratorio 7: Docker en Bioinformática
+
+# Partir de la imagen oficial de Python 3.11-slim (imagen ligera)
+FROM python:3.11-slim
+
+# Metadata sobre la imagen
+LABEL maintainer="alumno09" \
+      description="Python environment with Jupyter, NumPy and Numba for array reduction operations" \
+      version="1.0"
+
+# Instalar los paquetes necesarios (cambian raramente)
+# --no-cache-dir reduce el tamaño de la imagen
+RUN pip install --no-cache-dir \
+    jupyter \
+    numpy \
+    numba
+
+# Copiar el notebook al contenedor
+COPY reduc-operation-array-par-alumno09.ipynb /app/
+
+# Establecer el directorio de trabajo
+WORKDIR /app
+
+# Comando por defecto: ejecutar el notebook con ipython usando N=100000
+CMD ["ipython", "/app/reduc-operation-array-par-alumno09.ipynb", "100000"]
